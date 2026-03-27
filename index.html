@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 於大數據分析領域之技術架構與實務應用研究</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FAFAF9;
+            color: #292524;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 250px;
+                max-height: 300px;
+            }
+        }
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .nav-link.active {
+            border-bottom: 2px solid #0D9488;
+            color: #0F766E;
+            font-weight: 600;
+        }
+        .tab-btn.active {
+            background-color: #0D9488;
+            color: white;
+            border-color: #0D9488;
+        }
+        .workflow-step.active .step-circle {
+            background-color: #0D9488;
+            color: white;
+            border-color: #0D9488;
+        }
+        .workflow-step.active .step-line {
+            background-color: #0D9488;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-content.open {
+            max-height: 500px;
+        }
+    </style>
+    <!-- Chosen Palette: Warm Neutrals with Teal Accents -->
+    <!-- Application Structure Plan: Dashboard approach with thematic sections for logical exploration. -->
+    <!-- Visualization & Content Choices: Interactive tabs, clickable workflow steps, and dynamic Chart.js visualizations. NO SVG/Mermaid used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="antialiased selection:bg-teal-200 selection:text-teal-900">
+
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-stone-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-stone-800 tracking-tight">Python <span class="text-teal-600">BigData</span></span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#intro" class="nav-link active text-stone-500 hover:text-stone-800 px-1 py-2 text-sm font-medium transition-colors" data-target="intro">壹、緒論</a>
+                    <a href="#tech" class="nav-link text-stone-500 hover:text-stone-800 px-1 py-2 text-sm font-medium transition-colors" data-target="tech">貳、技術體系</a>
+                    <a href="#workflow" class="nav-link text-stone-500 hover:text-stone-800 px-1 py-2 text-sm font-medium transition-colors" data-target="workflow">參、處理流程</a>
+                    <a href="#applications" class="nav-link text-stone-500 hover:text-stone-800 px-1 py-2 text-sm font-medium transition-colors" data-target="applications">肆、實務場景</a>
+                    <a href="#ethics" class="nav-link text-stone-500 hover:text-stone-800 px-1 py-2 text-sm font-medium transition-colors" data-target="ethics">伍、數據治理</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
+
+        <section id="intro" class="scroll-mt-24 fade-enter">
+            <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-8 md:p-12">
+                <div class="max-w-3xl">
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-stone-900 mb-6 leading-tight">Python 於大數據分析領域之<br><span class="text-teal-600">技術架構與實務應用研究</span></h1>
+                    <p class="text-lg text-stone-600 mb-8 leading-relaxed">
+                        在當前數位轉型與資訊爆發之全球背景下，大規模數據集（Big Data）之獲取、存儲與處理能力已轉化為組織之核心競爭力指標。
+                    </p>
+                    <div class="bg-stone-50 border-l-4 border-teal-500 p-6 rounded-r-lg">
+                        <p class="text-stone-700 italic">
+                            「Python 程式語言憑藉其高度之擴充性及成熟之科學計算生態體系，已被廣泛認定為數據科學領域之標準工具。」
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tech" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-stone-900 mb-4">貳、 技術體系與組件之深度分析</h2>
+                <p class="text-stone-600 max-w-4xl leading-relaxed">
+                    請點擊左側處理階段探索各個核心框架。合理的技術配置是維護運算效率與精確度的關鍵。
+                </p>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-8 bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
+                <div class="w-full md:w-1/3 flex flex-col space-y-2" id="tech-tabs-container">
+                </div>
+                
+                <div class="w-full md:w-2/3 bg-stone-50 rounded-xl p-8 border border-stone-100 min-h-[300px] flex flex-col justify-center" id="tech-content-container">
+                    <h3 class="text-xl font-bold text-teal-800 mb-2" id="tech-content-title"></h3>
+                    <div class="flex flex-wrap gap-2 mb-6" id="tech-content-tools"></div>
+                    <p class="text-stone-700 leading-relaxed text-lg" id="tech-content-desc"></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="workflow" class="scroll-mt-24">
+            <div class="mb-12 text-center max-w-3xl mx-auto">
+                <h2 class="text-2xl font-bold text-stone-900 mb-4">參、 標準化數據處理流程</h2>
+                <p class="text-stone-600 leading-relaxed">
+                    點擊流程圖節點，深入了解從需求分析到模型部署的操作規範。
+                </p>
+            </div>
+            <div class="relative max-w-4xl mx-auto" id="workflow-container">
+            </div>
+        </section>
+
+        <section id="applications" class="scroll-mt-24">
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-stone-900 mb-4">肆、 多元化實務應用場景</h2>
+                <p class="text-stone-600 max-w-4xl leading-relaxed">
+                    展示如何透過數據視覺化洞察趨勢與異常。
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 flex flex-col">
+                    <h3 class="text-lg font-bold text-stone-800 mb-2 flex items-center">📚 教育公平與預測</h3>
+                    <div class="chart-container">
+                        <canvas id="eduChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 flex flex-col">
+                    <h3 class="text-lg font-bold text-stone-800 mb-2 flex items-center">🩺 醫療動態模擬</h3>
+                    <div class="chart-container">
+                        <canvas id="healthChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 flex flex-col lg:col-span-2">
+                    <h3 class="text-lg font-bold text-stone-800 mb-2 flex items-center">🛡️ 金融風控監測</h3>
+                    <div class="chart-container">
+                        <canvas id="finChart"></canvas>
+                    </div>
+                    <div class="mt-4 flex justify-end">
+                        <button id="regenerateAnomalyBtn" class="px-4 py-2 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded transition-colors text-xs font-bold">重新模擬交易網絡</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ethics" class="scroll-mt-24 mb-24">
+            <div class="bg-stone-900 rounded-3xl p-8 md:p-12 text-stone-100 shadow-xl">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-10">伍、 數據治理與道德邊界</h2>
+                <div class="space-y-4" id="accordion-container">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-stone-200 py-10">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-xs text-stone-400">互動式分析報告 · 根據研究文獻生成</p>
+        </div>
+    </footer>
+
+    <script>
+        const state = {
+            activeTechTab: 'acquisition',
+            activeWorkflowStep: 0
+        };
+
+        const techData = {
+            acquisition: {
+                title: "數據獲取與異質整合",
+                tools: ["Requests", "Scrapy", "Selenium"],
+                desc: "Requests 執行 REST API 呼叫；Scrapy 提供高併發非同步架構；Selenium 處理動態渲染數據。"
+            },
+            cleaning: {
+                title: "數據清洗與管理",
+                tools: ["Pandas", "NumPy", "Polars"],
+                desc: "Pandas 操縱數據框架；NumPy 實現向量運算；Polars 利用並行運算突破效能瓶頸。"
+            },
+            distributed: {
+                title: "分散式運算架構",
+                tools: ["PySpark", "Dask", "Ray"],
+                desc: "PySpark 實現橫向擴展；Dask 執行延遲評估調度；Ray 優化任務流。"
+            },
+            ml: {
+                title: "機器學習與推論",
+                tools: ["Scikit-learn", "XGBoost", "LightGBM"],
+                desc: "構建標準化流水線，提升訓練效率與預測精準度。"
+            },
+            dl: {
+                title: "深度學習與感知",
+                tools: ["PyTorch", "TensorFlow", "JAX"],
+                desc: "支撐複雜神經網絡開發，引領產業變革。"
+            },
+            viz: {
+                title: "視覺化與決策支援",
+                tools: ["Matplotlib", "Plotly", "Streamlit"],
+                desc: "將靜態模型轉化為即時決策支持系統。"
+            }
+        };
+
+        const workflowData = [
+            { id: "1", title: "需求分析", desc: "將業務願景拆解為量化指標。" },
+            { id: "2", title: "ETL 優化", desc: "處理異質數據並確保透明度。" },
+            { id: "3", title: "特徵萃取", desc: "辨識異常值並轉換資訊。" },
+            { id: "4", title: "模型訓練", desc: "交叉驗證尋求最優解。" },
+            { id: "5", title: "自動部署", desc: "建立監控與重訓機制。" }
+        ];
+
+        const ethicsData = [
+            { title: "數據隱私保護", icon: "🔒", content: "採用差分隱私或同態加密技術。" },
+            { title: "演算法公平性", icon: "⚖️", content: "矯正偏見，避免加劇社會不公。" },
+            { title: "法律框架遵循", icon: "📜", content: "遵循 GDPR 等個資保護法律。" }
+        ];
+
+        function initNavigation() {
+            const links = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    if (pageYOffset >= (section.offsetTop - 150)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                links.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('data-target') === current);
+                });
+            });
+        }
+
+        function updateTechContent(key, btnElement) {
+            const allBtns = document.querySelectorAll('.tab-btn');
+            if (allBtns.length > 0) {
+                allBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-[#0D9488]', 'text-white', 'border-[#0D9488]');
+                    b.classList.add('bg-white', 'text-stone-600', 'border-stone-200');
+                });
+            }
+            
+            if (btnElement) {
+                btnElement.classList.remove('bg-white', 'text-stone-600', 'border-stone-200');
+                btnElement.classList.add('active', 'bg-[#0D9488]', 'text-white', 'border-[#0D9488]');
+            }
+
+            const data = techData[key];
+            if (!data) return;
+
+            document.getElementById('tech-content-title').innerText = data.title;
+            const toolsContainer = document.getElementById('tech-content-tools');
+            toolsContainer.innerHTML = '';
+            data.tools.forEach(tool => {
+                const span = document.createElement('span');
+                span.className = "px-3 py-1 bg-white border border-stone-200 text-teal-700 text-sm font-semibold rounded-full shadow-sm";
+                span.innerText = tool;
+                toolsContainer.appendChild(span);
+            });
+            
+            const descEl = document.getElementById('tech-content-desc');
+            descEl.classList.remove('fade-enter-active');
+            void descEl.offsetWidth; 
+            descEl.innerText = data.desc;
+            descEl.classList.add('fade-enter-active');
+            state.activeTechTab = key;
+        }
+
+        function initTechSection() {
+            const container = document.getElementById('tech-tabs-container');
+            const keys = Object.keys(techData);
+            let firstBtn = null;
+
+            keys.forEach((key, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `tab-btn w-full text-left px-5 py-4 rounded-xl font-medium text-sm transition-all duration-200 border bg-white text-stone-600 border-stone-200 hover:bg-stone-50`;
+                btn.innerText = techData[key].title.split('與')[0]; // 簡化標籤
+                btn.onclick = () => updateTechContent(key, btn);
+                container.appendChild(btn);
+                if (idx === 0) firstBtn = btn;
+            });
+
+            if (firstBtn) updateTechContent(keys[0], firstBtn);
+        }
+
+        function initWorkflowSection() {
+            const container = document.getElementById('workflow-container');
+            workflowData.forEach((step, index) => {
+                const isLeft = index % 2 === 0;
+                const html = `
+                    <div class="relative z-10 md:flex items-center justify-between w-full cursor-pointer workflow-step group ${index === 0 ? 'active' : ''}" onclick="updateWorkflow(${index}, this)">
+                        <div class="order-1 md:w-5/12 hidden md:block text-right pr-8">
+                            ${isLeft ? `<h4 class="text-xl font-bold text-stone-800">${step.id}. ${step.title}</h4>` : ''}
+                        </div>
+                        <div class="z-20 flex items-center order-1 bg-stone-100 shadow-sm border-2 border-stone-300 w-12 h-12 rounded-full step-circle md:mx-auto relative">
+                            <h1 class="mx-auto font-bold text-lg">${step.id}</h1>
+                        </div>
+                        <div class="order-1 bg-white rounded-xl shadow-sm border border-stone-200 md:w-5/12 px-6 py-5 mt-4 md:mt-0 ${isLeft ? 'md:ml-8' : 'md:mr-8 md:text-right'} group-hover:shadow-md">
+                            <h4 class="text-xl font-bold text-stone-800 mb-2 md:hidden">${step.title}</h4>
+                            ${!isLeft ? `<h4 class="text-xl font-bold text-stone-800 mb-2 hidden md:block">${step.title}</h4>` : ''}
+                            <p class="text-sm text-stone-600">${step.desc}</p>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+            updateWorkflow(0, container.querySelector('.workflow-step'));
+        }
+
+        function updateWorkflow(index, element) {
+            document.querySelectorAll('.workflow-step').forEach(el => {
+                el.classList.remove('active');
+                const circle = el.querySelector('.step-circle');
+                circle.classList.remove('bg-[#0D9488]', 'text-white', 'border-[#0D9488]');
+                circle.classList.add('bg-stone-100', 'border-stone-300', 'text-stone-800');
+            });
+            element.classList.add('active');
+            const circle = element.querySelector('.step-circle');
+            circle.classList.add('bg-[#0D9488]', 'text-white', 'border-[#0D9488]');
+            state.activeWorkflowStep = index;
+        }
+
+        function initEthicsSection() {
+            const container = document.getElementById('accordion-container');
+            ethicsData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = "border border-stone-700 rounded-xl overflow-hidden bg-stone-800/50";
+                div.innerHTML = `
+                    <button class="w-full px-6 py-4 flex justify-between items-center text-left" onclick="toggleAccordion(${index})">
+                        <span class="font-bold text-lg flex items-center"><span class="mr-3 text-2xl">${item.icon}</span> ${item.title}</span>
+                        <span class="text-teal-500" id="icon-${index}">+</span>
+                    </button>
+                    <div class="accordion-content px-6 bg-stone-800/30" id="content-${index}">
+                        <p class="py-4 text-stone-300">${item.content}</p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleAccordion(index) {
+            const content = document.getElementById(`content-${index}`);
+            const icon = document.getElementById(`icon-${index}`);
+            const isOpen = content.classList.contains('open');
+            document.querySelectorAll('.accordion-content').forEach((el, i) => {
+                el.classList.remove('open');
+                document.getElementById(`icon-${i}`).innerText = '+';
+            });
+            if (!isOpen) {
+                content.classList.add('open');
+                icon.innerText = '−';
+            }
+        }
+
+        let eduChartObj, healthChartObj, finChartObj;
+
+        function initCharts() {
+            Chart.defaults.font.family = "'Segoe UI', sans-serif";
+            Chart.defaults.color = '#78716C';
+            
+            const ctxEdu = document.getElementById('eduChart').getContext('2d');
+            eduChartObj = new Chart(ctxEdu, {
+                type: 'bar',
+                data: {
+                    labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
+                    datasets: [{
+                        label: '互動時長',
+                        data: [120, 135, 110, 90, 85, 60, 45, 30],
+                        backgroundColor: '#0D9488',
+                        borderRadius: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            const ctxHealth = document.getElementById('healthChart').getContext('2d');
+            healthChartObj = new Chart(ctxHealth, {
+                type: 'line',
+                data: {
+                    labels: ['D1', 'D3', 'D5', 'D7', 'D9', 'D11', 'D13', 'D15'],
+                    datasets: [{
+                        label: '預測趨勢',
+                        data: [45, 130, 280, 580, 950, 1400, 1850, 2200],
+                        borderColor: '#0284C7',
+                        tension: 0.4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            generateFinChart();
+            document.getElementById('regenerateAnomalyBtn').addEventListener('click', () => {
+                if (finChartObj) finChartObj.destroy();
+                generateFinChart();
+            });
+        }
+
+        function generateFinChart() {
+            const ctxFin = document.getElementById('finChart').getContext('2d');
+            const normalData = Array.from({length: 80}, () => ({ x: Math.random() * 10000, y: Math.random() * 50, r: 4 }));
+            const anomalyData = Array.from({length: 10}, () => ({ x: 8000 + Math.random() * 1500, y: 80 + Math.random() * 15, r: 8 }));
+            finChartObj = new Chart(ctxFin, {
+                type: 'bubble',
+                data: {
+                    datasets: [
+                        { label: '正常交易', data: normalData, backgroundColor: 'rgba(13, 148, 136, 0.4)' },
+                        { label: '高風險群集', data: anomalyData, backgroundColor: 'rgba(225, 29, 72, 0.6)' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        window.onload = () => {
+            initNavigation();
+            initTechSection();
+            initWorkflowSection();
+            initEthicsSection();
+            initCharts();
+            document.querySelector('#intro').classList.add('fade-enter-active');
+        };
+    </script>
+</body>
+</html>
